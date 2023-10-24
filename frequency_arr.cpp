@@ -10,7 +10,6 @@ void freq2(vector<int>& nums){
         mp[nums[i]]++;
     }
     
-     
     
 }
  
