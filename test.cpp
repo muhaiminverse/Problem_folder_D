@@ -1,12 +1,43 @@
-#include<bits/stdc++.h>
+//{ Driver Code Starts
+#include <bits/stdc++.h>
 using namespace std;
 
-int main(){
+// } Driver Code Ends
+class Solution{
+    public:
+    long long findMinDiff(vector<long long> a, long long n, long long m){
+        int ans = 0,j=0;
+    sort(a.begin(),a.end());
+    
+    for(int i; i<a.size();i++){
+        j=i+m-1;
+        if(j == a.size() - 1) return ans;
+        ans = min(a[i],a[j]);
+    }  
+    } 
+};
 
-    vector<int>nums = {-2,1,-3,4,-1,2,1,-5,4};
-    sort(nums.begin(),nums.end());
-
-    for(int i : nums){
-        cout<<i<<" ";
-    }
+//{ Driver Code Starts.
+int main() {
+	long long t;
+	cin>>t;
+	while(t--)
+	{
+		long long n;
+		cin>>n;
+		vector<long long> a;
+		long long x;
+		for(long long i=0;i<n;i++)
+		{
+			cin>>x;
+			a.push_back(x);
+		}
+		
+		long long m;
+		cin>>m;
+		Solution ob;
+		cout<<ob.findMinDiff(a,n,m)<<endl;
+	}
+	return 0;
 }
+// } Driver Code Ends
