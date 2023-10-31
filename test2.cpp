@@ -1,55 +1,91 @@
-#include <bits/stdc++.h>
+// problem link - https://cses.fi/problemset/task/1197
+
+#include<bits/stdc++.h>
 using namespace std;
+const int N = 1e5 + 5;
+const long long INF = 1e18;
 
-int main(){
-    int m,k,n;
-cin>>n;
-  vector<int>a;
-  for (int i = 0; i < n; i++)
-  {
-    cin>>m;
-    a.push_back(m);
-  }
-  cin>>k;
-  sort(a.begin(),a.end());
+vector< pair<int, int> >adj_list[N];
+long long d[N];
 
-  int low = 0, high = a.size()-1;
-  int mid;
-  bool flag = false;
-  while (low<=high)
-  {
+int parent[N];
 
-    mid = (low+high)/2;
+int main() {
 
-    if(a[mid] == k) {
-      flag = true;
-      break;
+    int n, m;
+    cin >> n >> m;
+
+    for(int i = 1 ; i <=  n ; i++) {
+        d[i] = INF;
     }
 
-    if(a[mid]>k){
-        high = mid-1;
-        
+    for(int i = 0 ; i < m ; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        adj_list[u].push_back({ v, w });
     }
-    else{
-      low = mid+1;
-      
-    } 
 
+    bool negative_cycle = false;
+    int last_updated_node = -1;
 
-  }
-  if(flag){
-      cout<<"Found it";
+    for(int i = 1 ; i <= n ; i++) {
+        for(int node = 1 ; node <= n ; node++) {
+            for(pair<int, int> adj_node: adj_list[node]) {
+                int u = node;
+                int v = adj_node.first;
+                int w = adj_node.second;
 
-  }
-  else{ cout<<"None";
+                if(d[u] + w < d[v]) {
+                    d[v] = d[u] + w;
+                    parent[v] = u;
+                    if(i == n) {
+                        negative_cycle = true;
+                        last_updated_node = v;
+                    }
+                }
+            }
+        }
+    }
+    if(negative_cycle == true) {
+        cout<<"YES"<<endl;
 
-  }
-  
-  
+        int selected_node = last_updated_node;
+        for(int i = 1 ; i <= n-1 ; i++) {
+            selected_node = parent[selected_node];
+        }
+
+        int first_node = selected_node;
+
+        vector<int>cycle;
+        cycle.push_back(selected_node);
+
+        while(true) {
+            selected_node = parent[selected_node];
+            cycle.push_back(selected_node);
+            if(selected_node == first_node) {
+                break;
+            }
+        }
+
+        reverse(cycle.begin(), cycle.end());
+
+        for(int node: cycle) {
+            cout<<node<<" ";
+        }
+        cout<<endl;
+    }
+    else {
+        cout<<"NO"<<endl;
+    }
+    return 0;
 }
 
 /*
-10
-3 5 7 8 9 5 1 4 6 2
-0
+5 6
+1 2 2
+1 3 4
+2 3 1
+3 4 3
+4 2 -5
+2 5 2
 */
