@@ -13,7 +13,7 @@ int main(){
         cin>>arr[i];
     }
 
-    vector<int>pref(n);
+    vector<int>pref(n+1);
     for (int i = 0; i < pref.size(); i++)
     {
         pref[i+1] = pref[i] + arr[i];
