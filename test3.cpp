@@ -1,49 +1,53 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <vector>
+
 using namespace std;
 
-int main()
-{
-    int node, edge, start_node;
-    cout << "Enter number of nodes: ";
-    cin >> node;
-    cout << "Enter number of edges: ";
-    cin >> edge;
+void maxHeapify(vector<int> &arr, int n, int i) {
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
 
-    bool visit[node+1];
-    vector<int> adj[node+1];  //array of vector
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
 
-    cout << "Enter the edges: " << endl;
-    for(int i=0; i<edge; i++)
-    {
-        int a, b;
-        cin >> a >> b;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    if (largest != i) {
+        swap(arr[i], arr[largest]);
+        maxHeapify(arr, n, largest);
+    }
+}
+
+void heapSort(vector<int> &arr) {
+    int n = arr.size();
+
+    // Build a max heap
+    for (int i = n / 2 - 1; i >= 0; i--)
+        maxHeapify(arr, n, i);
+
+    // Extract elements one by one
+    for (int i = n - 1; i > 0; i--) {
+        swap(arr[0], arr[i]);
+        maxHeapify(arr, i, 0);
+    }
+}
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
     }
 
-    cout << "Enter the starting node: ";
-    cin >> start_node;
+    heapSort(arr);
 
-    for(int i=0; i<=node; i++)
-        visit[i]=false;
-
-    queue<int>q;
-    q.push(start_node);
-    visit[start_node] = true;
-
-    cout << "BFS result: " << endl;
-    while(!q.empty())
-    {
-        int fr = q.front();
-        q.pop();
-        cout << fr << endl;
-        for(int i=0; i<adj[fr].size(); i++)
-        {
-            if(!visit[adj[fr][i]])
-            {
-                visit[adj[fr][i]]=true;
-                q.push(adj[fr][i]);
-            }
-        }
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
     }
+
+    return 0;
 }
