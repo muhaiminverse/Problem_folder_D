@@ -1,44 +1,38 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int main()
-{
-    int node, edge, start_node;
-    cin >> node;
-    cin >> edge;
+void abs(vector<vector<int>>&m){
 
-    bool visit[node+1];
-    vector<int> adj[node+1];
+    // for (int i = 0; i < m.size(); i++)
+    // {
+    //     for (int j = 0; j < m[0].size(); j++)
+    //     {
+    //         cout<<m[i][j]<<" ";
+    //     }
+    // }
 
-    for(int i=0; i<edge; i++)
-    {
-        int a, b;
-        cin >> a >> b;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
-    }
-
-    cin >> start_node;
-
-    for(int i=0; i<=node; i++)
-        visit[i]=false;
-
-    queue<int>q;
-    q.push(start_node);
-    visit[start_node] = true;
-
-    while(!q.empty())
-    {
-        int fr = q.front();
-        q.pop();
-        cout << fr << endl;
-        for(int i=0; i<adj[fr].size(); i++)
-        {
-            if(!visit[adj[fr][i]])
-            {
-                visit[adj[fr][i]]=true;
-                q.push(adj[fr][i]);
-            }
+        for(int i=0;i<m.size();i++){
+                cout<<m[0][i]<<" ";
+            for(int j=0;j<m[0].size();j++){
+               
+            };
+            cout<<endl;
         }
+    
+}
+
+int main(){
+  std::vector<int> arr = {1, 2, 3, 5, 6};
+
+    // Find the position of the first element greater than 4
+    auto it = std::upper_bound(arr.begin(), arr.end(), 4);
+
+    // Check if the iterator is not pointing beyond the end of the array
+    if (it != arr.end()) {
+        std::cout << "The ceiling of 4 is: " << *it << std::endl;
+    } else {
+        std::cout << "There is no ceiling for 4 in the array." << std::endl;
     }
+
+    return 0;
 }
